@@ -3,6 +3,13 @@ package vendas.model;
 
 
 public class Cliente {
+	private int id;
+
+	private String nome;
+
+	private String CPF;
+	public Cliente () {}
+	
 	public Cliente(int id, String nome, String cPF) {
 		super();
 		this.id = id;
@@ -17,11 +24,7 @@ public class Cliente {
 		return "Cliente ID: " + id + ", Nome: " + nome + ", CPF: " + CPF ;
 	}
 
-	private int id;
 
-	private String nome;
-
-	private String CPF;
 
 	public int getId() {
 		return id;
@@ -45,6 +48,14 @@ public class Cliente {
 
 	public void setCPF(String cPF) {
 		CPF = cPF;
+	}
+	public boolean isNew() {
+		if (id == 0) {
+			return true;
+			}
+		else {
+			return false;
+		}
 	}
 
 }

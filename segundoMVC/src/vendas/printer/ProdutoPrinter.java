@@ -17,6 +17,10 @@ public class ProdutoPrinter {
 	public void exibirProduto(Produto produto) {
 		System.out.println(produto);
 	}
+	public void listarProdutos() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

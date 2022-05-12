@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import vendas.model.Pedido;
+import vendas.model.Produto;
 
 public class PedidoController {
 	private HashMap<Integer, Pedido> pedidos = new HashMap<>();
+	
+
 
 	public List<Pedido> pedido;
 	
