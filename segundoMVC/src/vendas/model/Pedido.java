@@ -18,6 +18,9 @@ public class Pedido {
 
 	private double precoTotal;
 
+	//Método para somar os pedidos utilizando um "for" mais pratico
+	//declarando o valor da variavel em '0' e adicionando valor(produto.getPreco()) conforme 
+	//o for se repete
 	public void somar() {
 		precoTotal = 0;
 		for (Produto produto : produtos) {

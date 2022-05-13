@@ -11,6 +11,7 @@ import vendas.controller.ProdutoController;
 
 
 public class VendasAPP2 {
+	// Criando um scanner para ser utilizado em todas as classes do pacote
 	private static Scanner scanner = new Scanner(System.in);
 
 	public static Scanner getScanner() {
@@ -18,14 +19,14 @@ public class VendasAPP2 {
 	}
 
 	public static void main(String[] args) throws Exception {
+		// Método main contando os controladores das classes
 		
 		ClienteController controlador = new ClienteController();
 		ProdutoController controladorProduto = new ProdutoController();
 		PedidoController controladorPedido = new PedidoController();
 		MenuPrinter2 menuP = new MenuPrinter2();
-		
-		
-		
+	
+		// declarando que o MenuPrinter2 será o responsando para gerenciar todo o app
 		menuP.executarPrinter(controlador, controladorProduto, controladorPedido);
 		
 		
@@ -47,6 +48,7 @@ public class VendasAPP2 {
 		
 		
 		
+	//Abaixo estão anotações de variações e versões anteriores	
 		
 		
 //		ClientePrinter printer = new ClientePrinter();

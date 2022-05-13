@@ -8,19 +8,20 @@ import vendas.model.Cliente;
 
 public class ClientePrinter {
 	public Cliente capturarCliente(Cliente cliente) {
+		//monitora se o cliente é novo
 		boolean isNew = cliente.isNew();
 
 		Scanner sc = VendasAPP2.getScanner();
 
-		
+		//método para ver se o cliente é novo
 		if (!isNew) {
 			System.out.println("Alterando Id do cliente: " + cliente.getId());
-		} else {
+		} else { //se não for novo ele insere um novo cliente
 			System.out.println("Inserindo um novo cliente: ");
 		}
 		System.out.println();
 
-		if (isNew) {
+		if (isNew) {//continua monitorando se é novo ou não
 			System.out.print("Informe o Id: ");
 			cliente.setId(sc.nextInt());
 			sc.nextLine();

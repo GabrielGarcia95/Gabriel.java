@@ -8,6 +8,7 @@ import vendas.model.Produto;
 public class ProdutoController {
 	private HashMap<Integer, Produto> produtos = new HashMap<>();
 	
+	//adicionando "produtos" para o código não iniciar vazio e poder já realizar testes de pedidos e cadastros
 	public ProdutoController() {
 		try {
         	inserirProduto(new Produto(900, "Televisão", 5500.50));

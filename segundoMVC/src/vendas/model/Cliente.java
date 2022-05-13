@@ -10,6 +10,7 @@ public class Cliente {
 	private String CPF;
 	public Cliente () {}
 	
+	// formato para cadastrar cliente
 	public Cliente(int id, String nome, String cPF) {
 		super();
 		this.id = id;
@@ -19,6 +20,7 @@ public class Cliente {
 
 	
 
+	// variação para facilitar na hora de imprimir no console
 	@Override
 	public String toString() {
 		return "Cliente ID: " + id + ", Nome: " + nome + ", CPF: " + CPF ;
@@ -49,6 +51,7 @@ public class Cliente {
 	public void setCPF(String cPF) {
 		CPF = cPF;
 	}
+	//Método boolean para usalo no ClientePrinter e lá não deixar o cliente ser cadastrado sem nome
 	public boolean isNew() {
 		if (id == 0) {
 			return true;

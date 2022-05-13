@@ -1,6 +1,6 @@
 package vendas.printer;
 
-import java.util.Collection;
+import java.util.Collection; 
 import java.util.Scanner;
 
 import vendas.UI.VendasAPP2;
@@ -9,6 +9,7 @@ import vendas.model.Produto;
 
 public class ProdutoPrinter {
 	public Produto capturarProduto(Produto produto) {
+		//método para ver se o produto já existe
 		boolean isNew = produto.isNew();
 		
 		Scanner sc = VendasAPP2.getScanner();
@@ -54,9 +55,6 @@ public class ProdutoPrinter {
 	public void exibirProduto(Produto produto) {
 		System.out.println(produto);
 	}
-	public void listarProdutos() {
-		// TODO Auto-generated method stub
 		
-	}
 
 }

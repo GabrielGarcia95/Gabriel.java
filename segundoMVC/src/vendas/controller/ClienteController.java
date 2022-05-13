@@ -9,6 +9,7 @@ public class ClienteController {
 	private HashMap<Integer, Cliente> clientes = new HashMap<>();
     
 	public ClienteController() {
+		//adicionando clientes para o código não iniciar vazio
 		try {
 			inserirCliente(new Cliente(369, "Gabriel", "123.123.123"));
 			inserirCliente(new Cliente(370, "Cristiano", "987.654.321"));
@@ -22,11 +23,12 @@ public class ClienteController {
 			System.err.println(e.getLocalizedMessage());
 		}
 	}
-	
+	//criando erro para caso o cliente cadastrado estiver repetindo o Id(codigo)
 	public void inserirCliente(Cliente cliente) throws Exception {
 		if (clientes.containsKey(cliente.getId())) {
 			throw new Exception("Código já existe");
 		}
+		//criando erros para caso o cliente cadastrado estiver sem nome
 		if (cliente.getNome().trim().equals("")) {
 			throw new Exception("Não é possível inserir um cliente sem nome.");
 		}
