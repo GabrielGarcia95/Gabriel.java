@@ -41,8 +41,8 @@ public class MenuPrinter {
 					sc.nextLine();
 					switch (back) {
 					case 1:
-						controleC.inserirCliente(teste.capturarCliente(new Cliente()));
-						//exemploNovoCliente();
+						//controleC.inserirCliente(teste.capturarCliente(new Cliente()));
+						exemploNovoCliente();
 						break;
 					case 2:
 						teste.exibirLista(controleC.listarClientes());
