@@ -1,22 +1,13 @@
 package vendas.UI;
 
-import vendas.printer.ClientePrinter;
 import vendas.printer.MenuPrinter;
-import vendas.printer.PedidoPrinter;
-import vendas.printer.ProdutoPrinter;
 
-import java.awt.Menu;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Scanner;
 
 import vendas.controller.ClienteController;
 import vendas.controller.PedidoController;
 import vendas.controller.ProdutoController;
-import vendas.model.Cliente;
-import vendas.model.Pedido;
-import vendas.model.Produto;
+
 
 public class VendasAPP2 {
 	private static Scanner scanner = new Scanner(System.in);
@@ -28,11 +19,13 @@ public class VendasAPP2 {
 	public static void main(String[] args) throws Exception {
 		
 		ClienteController controlador = new ClienteController();
+		ProdutoController controladorProduto = new ProdutoController();
+		PedidoController controladorPedido = new PedidoController();
 		MenuPrinter menuP = new MenuPrinter();
 		
 		
 		
-		menuP.executarPrinter(controlador);
+		menuP.executarPrinter(controlador, controladorProduto, controladorPedido);
 //		ClientePrinter printer = new ClientePrinter();
 //		
 //		try {

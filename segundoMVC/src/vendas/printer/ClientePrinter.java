@@ -12,6 +12,7 @@ public class ClientePrinter {
 
 		Scanner sc = VendasAPP2.getScanner();
 
+		
 		if (!isNew) {
 			System.out.println("Alterando Id do cliente: " + cliente.getId());
 		} else {
@@ -25,18 +26,20 @@ public class ClientePrinter {
 			sc.nextLine();
 		}
 		System.out.print("Informe o nome: ");
-		String nome = sc.nextLine();
+		
 
 		if (!isNew) {
-			System.out.print("[Nome anterior: " + cliente.getNome() + "]");
+			System.out.print("[Nome anterior: " + cliente.getNome() + "] Novo nome : ");
 		}
+		String nome = sc.nextLine();
 		if (isNew || (!isNew && !nome.trim().equals(""))) {
 			cliente.setNome(nome);
 		}
-		System.out.print("Informe o CPF: ");
+		
 		if (!isNew) {
-			System.out.print("CPF anterior: " + cliente.getCPF());
+			System.out.print("[CPF anterior: " + cliente.getCPF()+"] -");
 		}
+		System.out.print("Informe o CPF: ");
 		cliente.setCPF(sc.nextLine());
 		System.out.println();
 

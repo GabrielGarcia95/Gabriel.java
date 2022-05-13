@@ -6,6 +6,7 @@ public class Produto {
 	private String nome;
 
 	private double preco;
+	public Produto() {};
 
 	public Produto(int id, String nome, double preco) {
 		super();
@@ -41,6 +42,16 @@ public class Produto {
 
 	public void setPreco(double preco) {
 		this.preco = preco;
+	}
+	public boolean isNew() {
+		if(id ==0) {
+			return true;
+		}
+			else {
+				return false;
+				
+			
+		}
 	}
 
 }

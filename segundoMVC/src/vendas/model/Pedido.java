@@ -52,14 +52,6 @@ public class Pedido{
 		this.cliente = cliente;
 	}
 
-//	public double getValorTotal() {
-//		return valorTotal;
-//		
-//	}
-//
-//	public void setValorTotal(double valorTotal) {
-//		this.valorTotal = valorTotal;
-//	}
 
 	public List<Produto> getProdutos() {
 		return produtos;
