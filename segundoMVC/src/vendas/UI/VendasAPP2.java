@@ -1,6 +1,7 @@
 package vendas.UI;
 
-import vendas.printer.MenuPrinter;
+//import vendas.printer.MenuPrinter;
+import vendas.printer.MenuPrinter2;
 
 import java.util.Scanner;
 
@@ -21,11 +22,33 @@ public class VendasAPP2 {
 		ClienteController controlador = new ClienteController();
 		ProdutoController controladorProduto = new ProdutoController();
 		PedidoController controladorPedido = new PedidoController();
-		MenuPrinter menuP = new MenuPrinter();
+		MenuPrinter2 menuP = new MenuPrinter2();
 		
 		
 		
 		menuP.executarPrinter(controlador, controladorProduto, controladorPedido);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 //		ClientePrinter printer = new ClientePrinter();
 //		
 //		try {

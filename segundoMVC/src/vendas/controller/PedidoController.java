@@ -1,21 +1,15 @@
 package vendas.controller;
 
-import java.util.Collection;
+import java.util.Collection; 
 import java.util.HashMap;
-import java.util.List;
 
 import vendas.model.Pedido;
-import vendas.model.Produto;
 
 public class PedidoController {
 	private HashMap<Integer, Pedido> pedidos = new HashMap<>();
-	
 
+	public Collection<Pedido> pedido;
 
-	public List<Pedido> pedido;
-	
-
-	
 	public void inserirPedido(Pedido pedido) {
 		pedidos.put(pedido.getId(), pedido);
 	}
@@ -28,7 +22,8 @@ public class PedidoController {
 		pedidos.remove(id);
 	}
 
-	public Collection<Pedido> listarPedidos() {
+	public Collection<Pedido> listarPedidos() throws Exception {
+		// throw new Exception("Lista de pedidos vazia");
 		return pedidos.values();
 	}
 

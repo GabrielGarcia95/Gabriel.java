@@ -4,8 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class Pedido{
+public class Pedido {
 
 	private int id;
 
@@ -13,14 +12,12 @@ public class Pedido{
 
 	private Cliente cliente;
 
-	//private double valorTotal;
-	
 	private List<Produto> produtos = new ArrayList<>();
-	
+
 	private List<Produto> somaPedidos;
 
 	private double precoTotal;
-	
+
 	public void somar() {
 		precoTotal = 0;
 		for (Produto produto : produtos) {
@@ -52,7 +49,6 @@ public class Pedido{
 		this.cliente = cliente;
 	}
 
-
 	public List<Produto> getProdutos() {
 		return produtos;
 	}
@@ -69,11 +65,9 @@ public class Pedido{
 		this.somaPedidos = somaPedidos;
 	}
 
-
 	public double getPrecoTotal() {
 		return precoTotal;
 	}
-
 
 	public void setPrecoTotal(double precoTotal) {
 		this.precoTotal = precoTotal;
