@@ -3,10 +3,13 @@ package vendas.printer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 import vendas.UI.VendasAPP2;
 import vendas.controller.ClienteController;
 import vendas.controller.PedidoController;
 import vendas.controller.ProdutoController;
+import vendas.controller.db.ClienteControllerDB;
+import vendas.controller.db.ProdutoControllerDB;
 import vendas.model.Cliente;
 import vendas.model.Pedido;
 import vendas.model.Produto;
@@ -19,6 +22,8 @@ public class MenuPrinter2 {
 	ProdutoPrinter produ = new ProdutoPrinter();
 	ClientePrinter clie = new ClientePrinter();
 	PedidoPrinter pediP = new PedidoPrinter();
+	ClienteControllerDB controCDB = new ClienteControllerDB();
+	ProdutoControllerDB controPDB = new ProdutoControllerDB();
 
 	public void executarPrinter(ClienteController controleC, ProdutoController controleP, PedidoController pedidoC)
 			throws Exception {
@@ -42,7 +47,7 @@ public class MenuPrinter2 {
 				// while para se manter no menu de cadastro
 				while (back != 5) {
 					System.out.println();
-					System.out.println("Digite [1] para Cadastrar ou Editar um cliente."
+					System.out.println("Digite [1] para Cadastrar um cliente."
 							+ "\nDigite [2] para ver nossa lista de clientes" + "\nDigite [3] para atualizar cadastro"
 							+ "\nDigite [4] para excluir um cliente\nDigite [5] Menu príncipal");
 					back = sc.nextInt();
@@ -75,7 +80,7 @@ public class MenuPrinter2 {
 					System.out.println();
 					System.out.println(
 							"Digite [1] Ver produtos\nDigite [2] Pesquiser um produto por Id \nDigite [3] Cadastrar ou editar um produto "
-									+ "\nDigite [4] Excluir um produto \nDigite [5] Menu Príncipal.");
+									+ "\nDigite [4] Excluir um produto \nDigite [5] Menu Príncipal\nDigite [6] Editar um produto.");
 					p = sc.nextInt();
 					sc.nextLine();
 					// menu de produtos
@@ -91,6 +96,9 @@ public class MenuPrinter2 {
 						break;
 					case 4:
 						excluirProduto(controleP);
+						break;
+					case 6:
+						editarProduto(controleP);
 						break;
 
 					}
@@ -133,7 +141,8 @@ public class MenuPrinter2 {
 		boolean valido = false;
 		while (!valido) {
 			try {
-				controleC.inserirCliente(clie.capturarCliente(new Cliente()));
+				//controleC.inserirCliente(clie.capturarCliente(new Cliente()));
+				controCDB.insertClient(clie.capturarCliente(new Cliente()));
 				valido = true;
 			} catch (Exception e) {
 				System.err.println(e.getLocalizedMessage());
@@ -141,8 +150,13 @@ public class MenuPrinter2 {
 		}
 	}
 
-	public void exibirListaClientes(ClienteController controleC) {
-		clie.exibirLista(controleC.listarClientes());
+	public void exibirListaClientes(ClienteController controleC) throws Exception {
+		clie.exibirLista(controCDB.listClients());
+	}
+	public void exibirClientesDB(List<Cliente> list) {
+		for(Cliente cliente : list) {
+			exibeCliente(cliente);
+		}
 	}
 
 	public void editarCliente(ClienteController controleC) {
@@ -155,44 +169,75 @@ public class MenuPrinter2 {
 			try {
 				System.out.print("Digite o Id do usuario que deseja editar:");
 				int a = Integer.parseInt(sc.nextLine());
-				Cliente cliente = controleC.carregarCliente(a);
+				Cliente cliente = controCDB.getCliente(a);
 				cliente = clie.capturarCliente(cliente);
-				controleC.atualizarCliente(cliente);
+				controCDB.updateClient(cliente);
 			} catch (Exception e) {
 				System.err.println(e.getLocalizedMessage());
 			}
 		}
 
 	}
+	public void exibeCliente (Cliente cliente) {
+		System.out.println(cliente);
+	}
 
-	public void excluirCliente(ClienteController controleC) {
+	public void excluirCliente(ClienteController controleC) throws Exception {
 		System.out.print("Digite o ID do cliente que queira excluir:");
 		int excluir = sc.nextInt();
-		controleC.excluirCliente(excluir);
+//		controleC.excluirCliente(excluir);
+		Cliente x = controCDB.getCliente(excluir);
+		controCDB.deleteCliente(x);
 		System.out.println("Cliente excluido com sucesso!");
 
 	}
 
-	public void listarProduto(ProdutoController controleP) {
-		produ.listarProdutos(controleP.listarProdutos());
+	public void listarProduto(ProdutoController controleP) throws Exception {
+		//produ.listarProdutos(controleP.listarProdutos());
+		produ.listarProdutos(controPDB.listProduct());
 
 	}
+//	public void listarProdutosDB(List<Produto> list) {
+//		for(Produto produto : list) {
+//			exibirProdutoDB(produto);
+//		}
+//	}
 
-	public void exibirProduto(ProdutoController controleP) {
+//	public void exibirProdutoDB(Produto produto) {
+//		System.out.println(produto);
+//	}
+	public void editarProduto(ProdutoController controleP) throws Exception{
+		boolean valido = false;
+		while (!valido) {
+			try {
+				System.out.print("Digite o Id do Produto que deseja editar:");
+				int a = Integer.parseInt(sc.nextLine());
+				Produto produto = controPDB.getProduto(a);
+				produto = produ.capturarProduto(produto);
+				controPDB.updateProduct(produto);
+			} catch (Exception e) {
+				System.err.println(e.getLocalizedMessage());
+			}
+		}
+	}
+
+	public void exibirProduto(ProdutoController controleP) throws Exception {
 		System.out.print("Digite o id do produto que deseja visualizar: ");
 		int i = sc.nextInt();
-		produ.exibirProduto(controleP.carregarProduto(i));
+		produ.exibirProduto(controPDB.getProduto(i));
 	}
 
-	public void inserirProduto(ProdutoController controleP) {
-		controleP.inserirProduto(produ.capturarProduto(new Produto()));
+	public void inserirProduto(ProdutoController controleP) throws Exception {
+		controPDB.insertProduct(produ.capturarProduto(new Produto()));
+		//controleP.inserirProduto(produ.capturarProduto(new Produto()));
 
 	}
 
-	public void excluirProduto(ProdutoController controleP) {
+	public void excluirProduto(ProdutoController controleP) throws Exception {
 		System.out.print("Digite o ID do produto que queira excluir: ");
 		int excluir = sc.nextInt();
-		controleP.excluirProduto(excluir);
+		Produto pr = controPDB.getProduto(excluir);
+		controPDB.deleteProduct(pr);
 		System.out.print("Produto excluído com sucesso.");
 	}
 

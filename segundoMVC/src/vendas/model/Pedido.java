@@ -14,8 +14,6 @@ public class Pedido {
 
 	private List<Produto> produtos = new ArrayList<>();
 
-	private List<Produto> somaPedidos;
-
 	private double precoTotal;
 
 	//Método para somar os pedidos utilizando um "for" mais pratico
@@ -26,6 +24,7 @@ public class Pedido {
 		for (Produto produto : produtos) {
 			precoTotal += produto.getPreco();
 		}
+		//precoAvista += (float) (10 * 100/precoTotal);
 	}
 
 	public int getId() {
@@ -60,14 +59,6 @@ public class Pedido {
 		this.produtos = produtos;
 	}
 
-	public List<Produto> getSomaPedidos() {
-		return somaPedidos;
-	}
-
-	public void setSomaPedidos(List<Produto> somaPedidos) {
-		this.somaPedidos = somaPedidos;
-	}
-
 	public double getPrecoTotal() {
 		return precoTotal;
 	}
@@ -75,5 +66,7 @@ public class Pedido {
 	public void setPrecoTotal(double precoTotal) {
 		this.precoTotal = precoTotal;
 	}
+
+
 
 }

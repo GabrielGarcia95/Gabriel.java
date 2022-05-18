@@ -21,11 +21,11 @@ public class ClientePrinter {
 		}
 		System.out.println();
 
-		if (isNew) {//continua monitorando se é novo ou não
-			System.out.print("Informe o Id: ");
-			cliente.setId(sc.nextInt());
-			sc.nextLine();
-		}
+//		if (isNew) {//continua monitorando se é novo ou não
+//			System.out.print("Informe o Id: ");
+//			cliente.setId(sc.nextInt());
+//			sc.nextLine();
+//		}
 		System.out.print("Informe o nome: ");
 		
 

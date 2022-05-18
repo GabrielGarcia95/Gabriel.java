@@ -8,7 +8,7 @@ import vendas.model.Pedido;
 public class PedidoController {
 	private HashMap<Integer, Pedido> pedidos = new HashMap<>();
 
-	public Collection<Pedido> pedido;
+//	public Collection<Pedido> pedido;
 
 	public void inserirPedido(Pedido pedido) {
 		pedidos.put(pedido.getId(), pedido);

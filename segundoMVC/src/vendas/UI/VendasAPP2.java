@@ -48,6 +48,8 @@ public class VendasAPP2 {
 		
 		
 		
+		
+		
 	//Abaixo estão anotações de variações e versões anteriores	
 		
 		
