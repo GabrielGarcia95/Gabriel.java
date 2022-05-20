@@ -38,7 +38,7 @@ public class ProdutoPrinter {
 		}
 		System.out.print("Informe o preço: ");
 		produto.setPreco(sc.nextDouble());
-		System.out.println();
+		System.out.println("Confirmando novas alterações, Produto: "+produto.getNome()+", preço: R$" +produto.getPreco());
 		
 		return produto;
 		

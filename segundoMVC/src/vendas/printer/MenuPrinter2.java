@@ -1,5 +1,6 @@
 package vendas.printer;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,6 +10,7 @@ import vendas.controller.ClienteController;
 import vendas.controller.PedidoController;
 import vendas.controller.ProdutoController;
 import vendas.controller.db.ClienteControllerDB;
+import vendas.controller.db.PedidoControllerDB;
 import vendas.controller.db.ProdutoControllerDB;
 import vendas.model.Cliente;
 import vendas.model.Pedido;
@@ -24,6 +26,7 @@ public class MenuPrinter2 {
 	PedidoPrinter pediP = new PedidoPrinter();
 	ClienteControllerDB controCDB = new ClienteControllerDB();
 	ProdutoControllerDB controPDB = new ProdutoControllerDB();
+	PedidoControllerDB controPed = new PedidoControllerDB();
 
 	public void executarPrinter(ClienteController controleC, ProdutoController controleP, PedidoController pedidoC)
 			throws Exception {
@@ -111,7 +114,7 @@ public class MenuPrinter2 {
 				while (backP != 5) {
 					System.out.println();
 					System.out.println(
-							"Digite [1] Realizar um pedido\nDigite [2] Ver pedido(s)\nDigite [5] Menu Príncipal");
+							"Digite [1] Realizar um pedido\nDigite [2] Ver pedido(s)\nDigite [3] Buscar um pedido\nDigite [5] Menu Príncipal");
 					backP = sc.nextInt();
 					// menu de pedidos
 					switch (backP) {
@@ -120,6 +123,9 @@ public class MenuPrinter2 {
 						break;
 					case 2:
 						listarPedidos(pedidoC);
+						break;
+					case 3:
+						exibirPedido(pedidoC);
 
 					}
 				}
@@ -141,7 +147,7 @@ public class MenuPrinter2 {
 		boolean valido = false;
 		while (!valido) {
 			try {
-				//controleC.inserirCliente(clie.capturarCliente(new Cliente()));
+				// controleC.inserirCliente(clie.capturarCliente(new Cliente()));
 				controCDB.insertClient(clie.capturarCliente(new Cliente()));
 				valido = true;
 			} catch (Exception e) {
@@ -153,8 +159,9 @@ public class MenuPrinter2 {
 	public void exibirListaClientes(ClienteController controleC) throws Exception {
 		clie.exibirLista(controCDB.listClients());
 	}
+
 	public void exibirClientesDB(List<Cliente> list) {
-		for(Cliente cliente : list) {
+		for (Cliente cliente : list) {
 			exibeCliente(cliente);
 		}
 	}
@@ -162,7 +169,8 @@ public class MenuPrinter2 {
 	public void editarCliente(ClienteController controleC) {
 		// usando while com 'try catch' para editar um cliente com mensagem de erro para
 		// caso o cliente editado estiver sem nome
-		// o while é para voltar ao ínicio para caso o cliente inserido estiver sem nome e então
+		// o while é para voltar ao ínicio para caso o cliente inserido estiver sem nome
+		// e então
 		// disparar um erro
 		boolean valido = false;
 		while (!valido) {
@@ -178,7 +186,8 @@ public class MenuPrinter2 {
 		}
 
 	}
-	public void exibeCliente (Cliente cliente) {
+
+	public void exibeCliente(Cliente cliente) {
 		System.out.println(cliente);
 	}
 
@@ -193,7 +202,7 @@ public class MenuPrinter2 {
 	}
 
 	public void listarProduto(ProdutoController controleP) throws Exception {
-		//produ.listarProdutos(controleP.listarProdutos());
+		// produ.listarProdutos(controleP.listarProdutos());
 		produ.listarProdutos(controPDB.listProduct());
 
 	}
@@ -206,18 +215,16 @@ public class MenuPrinter2 {
 //	public void exibirProdutoDB(Produto produto) {
 //		System.out.println(produto);
 //	}
-	public void editarProduto(ProdutoController controleP) throws Exception{
-		boolean valido = false;
-		while (!valido) {
-			try {
-				System.out.print("Digite o Id do Produto que deseja editar:");
-				int a = Integer.parseInt(sc.nextLine());
-				Produto produto = controPDB.getProduto(a);
-				produto = produ.capturarProduto(produto);
-				controPDB.updateProduct(produto);
-			} catch (Exception e) {
-				System.err.println(e.getLocalizedMessage());
-			}
+	public void editarProduto(ProdutoController controleP) throws Exception {
+
+		try {
+			System.out.print("Digite o Id do Produto que deseja editar:");
+			int a = Integer.parseInt(sc.nextLine());
+			Produto produto = controPDB.getProduto(a);
+			produto = produ.capturarProduto(produto);
+			controPDB.updateProduct(produto);
+		} catch (Exception e) {
+			System.err.println(e.getLocalizedMessage());
 		}
 	}
 
@@ -229,7 +236,7 @@ public class MenuPrinter2 {
 
 	public void inserirProduto(ProdutoController controleP) throws Exception {
 		controPDB.insertProduct(produ.capturarProduto(new Produto()));
-		//controleP.inserirProduto(produ.capturarProduto(new Produto()));
+		// controleP.inserirProduto(produ.capturarProduto(new Produto()));
 
 	}
 
@@ -240,6 +247,41 @@ public class MenuPrinter2 {
 		controPDB.deleteProduct(pr);
 		System.out.print("Produto excluído com sucesso.");
 	}
+	public void exibirPedido(PedidoController pedidoC) throws Exception{
+		System.out.println("Digite o id do pedido que queira buscar");
+		int idp = sc.nextInt();
+		pediP.exibePedido(controPed.buscarPedido(idp));
+	}
+
+//	public void fazerPedido(ClienteController controleC, ProdutoController controleP, PedidoController pedidoC)
+//			// Anotando pedido utilizando todas as classes
+//			// Criando um novo representando (listarProduto) para a ArrayList<produto>
+//			throws Exception {
+//		System.out.println("Para fazer um pedido os adicione no carrinho");
+//		Pedido pedido = new Pedido();
+//		List<Produto> listarProduto = new ArrayList<>();
+//		System.out.println("Quantidade de itens que deseja adicionar no Carrinho de compras");
+//		int i = sc.nextInt();
+//		System.out.println("Você irá adicionar " + i + " iten(s), agora veja os itens disponíveis:");
+//		produ.listarProdutos(controleP.listarProdutos());
+//		System.out.print("Digite o id do item que deseja adicionar no carrinho - ");
+//		// utilizando o for para caso o pedido haver mais de 1 item, ele se repete até
+//		// que seja acrescentado o número índicado de itens
+//		for (int t = 0; t < i; t++) {
+//			System.out.print("Id:");
+//			int carrinho = sc.nextInt();
+//			listarProduto.add(controleP.carregarProduto(carrinho));
+//		}
+//		// finalizando o pedido
+//		System.out.print("Id do cliente: ");
+//		int idPedido = sc.nextInt();
+//		pedido.setCliente(controleC.carregarCliente(idPedido));
+//		pedido.setProdutos(listarProduto);
+//		pedido.somar();
+//		pedidoC.inserirPedido(pedido);
+//		pediP.exibirPedidos(pedidoC.listarPedidos());
+//		System.out.println();
+//	}
 
 	public void fazerPedido(ClienteController controleC, ProdutoController controleP, PedidoController pedidoC)
 			// Anotando pedido utilizando todas as classes
@@ -251,23 +293,23 @@ public class MenuPrinter2 {
 		System.out.println("Quantidade de itens que deseja adicionar no Carrinho de compras");
 		int i = sc.nextInt();
 		System.out.println("Você irá adicionar " + i + " iten(s), agora veja os itens disponíveis:");
-		produ.listarProdutos(controleP.listarProdutos());
+		produ.listarProdutos(controPDB.listProduct());
 		System.out.print("Digite o id do item que deseja adicionar no carrinho - ");
-		// utilizando o for para caso o pedido haver mais de 1 item, ele se repete até
-		// que seja acrescentado o número índicado de itens
+// utilizando o for para caso o pedido haver mais de 1 item, ele se repete até
+// que seja acrescentado o número índicado de itens
 		for (int t = 0; t < i; t++) {
 			System.out.print("Id:");
 			int carrinho = sc.nextInt();
-			listarProduto.add(controleP.carregarProduto(carrinho));
-		}
-		// finalizando o pedido
+			listarProduto.add(controPDB.getProduto(carrinho));
+				}
+// finalizando o pedido
 		System.out.print("Id do cliente: ");
-		int idPedido = sc.nextInt();
-		pedido.setCliente(controleC.carregarCliente(idPedido));
+		int idcliente = sc.nextInt();
+		pedido.setCliente(controCDB.getCliente(idcliente));
 		pedido.setProdutos(listarProduto);
+		pedido.setDate(new Date(System.currentTimeMillis()));
 		pedido.somar();
-		pedidoC.inserirPedido(pedido);
-		pediP.exibirPedidos(pedidoC.listarPedidos());
+		controPed.inserirPedido(pedido);
 		System.out.println();
 	}
 

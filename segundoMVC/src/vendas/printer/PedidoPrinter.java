@@ -18,5 +18,9 @@ public class PedidoPrinter {
 		
 
 	}
+	public void exibePedido(Pedido pedido) {
+		System.out.println("id Cliente: "+pedido.getId()+ " | cliente: "+pedido.getCliente()+" | data do pedido: "+pedido.getDate()+
+				" |Produtos: "+pedido.getProdutos()+" | preço total: "+pedido.getPrecoTotal());
+	}
 
 }

@@ -16,6 +16,13 @@ public class Pedido {
 
 	private double precoTotal;
 
+	@Override
+	public String toString() {
+		return "Pedido [id=" + id + ", date=" + date + ", cliente=" + cliente + 
+				", produtos=" + produtos
+				+ ", precoTotal=" + precoTotal + "]";
+	}
+
 	//Método para somar os pedidos utilizando um "for" mais pratico
 	//declarando o valor da variavel em '0' e adicionando valor(produto.getPreco()) conforme 
 	//o for se repete
@@ -65,6 +72,11 @@ public class Pedido {
 
 	public void setPrecoTotal(double precoTotal) {
 		this.precoTotal = precoTotal;
+	}
+
+	public int getId(List<Produto> listarProduto) {
+		return id;
+		
 	}
 
 
