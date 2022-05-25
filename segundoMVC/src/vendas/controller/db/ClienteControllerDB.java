@@ -58,7 +58,7 @@ public class ClienteControllerDB {
 		}
 	}
 
-	public void insertClient(Cliente cliente) throws Exception {
+	public Cliente insertClient(Cliente cliente) throws Exception {
 		Connection con = getConnection();
 
 		try {
@@ -70,6 +70,17 @@ public class ClienteControllerDB {
 			ps.setString(2, cliente.getCPF());
 
 			ps.executeUpdate();
+			
+			sql = "SELECT LAST_INSERT_ID() as id";
+			PreparedStatement ps2 = con.prepareStatement(sql);
+			ResultSet rs = ps2.executeQuery();
+			while (rs.next()) {
+				cliente.setId(rs.getInt("id"));
+			}
+			rs.close();
+			ps2.close();
+			
+			return cliente;
 
 		} catch (Exception e) {
 			throw e;
@@ -151,6 +162,12 @@ public class ClienteControllerDB {
 			ps.setInt(3, cliente.getId());
 			
 			ps.executeUpdate();
+			sql = "SELECT LAST_INSERT_ID() as id";
+			PreparedStatement ps2 = con.prepareStatement(sql);
+			ResultSet rs = ps2.executeQuery();
+			while (rs.next()) {
+				cliente.setId(rs.getInt("id"));
+			}
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -194,15 +211,5 @@ public class ClienteControllerDB {
 			}
 		}
 	}
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }

@@ -39,6 +39,7 @@ public class ProdutoControllerDB {
 				produto.setId(id);
 				produto.setNome(nome);
 				produto.setPreco(preço);
+				
 			}
 			rs.close();
 			ps.close();
@@ -66,6 +67,12 @@ public class ProdutoControllerDB {
 			ps.setDouble(2, produto.getPreco());
 
 			ps.executeUpdate();
+			sql = "SELECT LAST_INSERT_ID() as id";
+			PreparedStatement ps2 = con.prepareStatement(sql);
+			ResultSet rs = ps2.executeQuery();
+			while (rs.next()) {
+				produto.setId(rs.getInt("id"));
+			}
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -180,28 +187,5 @@ public class ProdutoControllerDB {
 				con.close();
 			}
 		}
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 }

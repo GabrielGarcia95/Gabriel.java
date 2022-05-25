@@ -114,7 +114,7 @@ public class MenuPrinter2 {
 				while (backP != 5) {
 					System.out.println();
 					System.out.println(
-							"Digite [1] Realizar um pedido\nDigite [2] Ver pedido(s)\nDigite [3] Buscar um pedido\nDigite [5] Menu Príncipal");
+							"Digite [1] Realizar um pedido\nDigite [2] Ver pedido(s)\nDigite [3] Buscar um pedido\nDigite [4] Excluir Pedido\nDigite [5] Menu Príncipal");
 					backP = sc.nextInt();
 					// menu de pedidos
 					switch (backP) {
@@ -126,6 +126,10 @@ public class MenuPrinter2 {
 						break;
 					case 3:
 						exibirPedido(pedidoC);
+						break;
+					case 4:
+						deletePedido(controPed);
+						break;
 
 					}
 				}
@@ -250,7 +254,8 @@ public class MenuPrinter2 {
 	public void exibirPedido(PedidoController pedidoC) throws Exception{
 		System.out.println("Digite o id do pedido que queira buscar");
 		int idp = sc.nextInt();
-		pediP.exibePedido(controPed.buscarPedido(idp));
+		controPed.buscarPedido(idp);
+		//pediP.exibePedido(controPed.buscarPedido(idp));
 	}
 
 //	public void fazerPedido(ClienteController controleC, ProdutoController controleP, PedidoController pedidoC)
@@ -314,9 +319,14 @@ public class MenuPrinter2 {
 	}
 
 	public void listarPedidos(PedidoController pedidoC) throws Exception {
-		pediP.exibirPedidos(pedidoC.listarPedidos());
-		if (pedidoC.listarPedidos().isEmpty()) {
-			System.out.println("Não há pedido(s)");
-		}
+		controPed.listarPedidos();
+
+	}
+	public void deletePedido(PedidoControllerDB pedidoC) throws Exception{
+		System.out.print("Digite o ID do pedido que queira excluir:");
+		int excluir = sc.nextInt();
+		Pedido x = controPed.buscarPedido(excluir);
+		controPed.excluirPedido(x);
+		System.out.println("Pedido excluido com sucesso!");
 	}
 }
