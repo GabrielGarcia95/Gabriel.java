@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import vendas.model.Cliente;
 import vendas.model.Pedido;
 import vendas.model.Produto;
 
@@ -17,6 +18,8 @@ public class PedidoControllerDB {
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pedido", "root", "fjsistemas");
 		return con;
 	}
+
+	private List <Produto> produtos;
 
 	public void inserirPedido(Pedido pedido) throws Exception {
 		Connection con = getConnection();
@@ -146,7 +149,7 @@ public class PedidoControllerDB {
 		try {
 			List<Pedido> list = new ArrayList<>();
 
-			String sql = "SELECT pedido.id, data, idcliente, valor_total FROM pedido";
+			String sql = "SELECT pedido.id, data, idcliente, valor_total, cliente.nome FROM pedido INNER JOIN cliente ON idcliente = cliente.id";
 
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);
@@ -156,51 +159,40 @@ public class PedidoControllerDB {
 				Date data = rs.getDate("data");
 				int idc = rs.getInt("idcliente");
 				Double tot = rs.getDouble("valor_total");
+				String nome = rs.getString("cliente.nome");
 				
-				//Produto produto = new Produto();
 				Pedido pedido = new Pedido();
 				pedido.setId(id);
 				pedido.setDate(data);
 				pedido.setId(idc);
 				pedido.setPrecoTotal(tot);
-			//	produto.setNome(nome);
+				
+				Cliente cliente = new Cliente();
+				cliente.setNome(nome);
+				pedido.setCliente(cliente);
 
-				list.add(pedido);
 				
-//				System.out.println(
-//						"ID pedido: " + id + ", Data: " + data + ", ID cliente: " + idc + ", Valor do pedido: " + tot);
 				
-				sql = "SELECT idpedido , idproduto, produto.nome FROM pedido_produto INNER JOIN produto";
+				String sql2 = "SELECT idpedido , idproduto, produto.nome, produto.preço FROM pedido_produto INNER JOIN produto ON produto.id = pedido_produto.idproduto";
 
 				Statement st2 = con.createStatement();
-				ResultSet rs2 = st2.executeQuery(sql);
+				ResultSet rs2 = st2.executeQuery(sql2);
 				while (rs2.next()) {
 						int idped = rs2.getInt("idpedido");
 						int idp = rs2.getInt("idproduto");
-						String pro = rs2.getString("nome");
+						String pro = rs2.getString("produto.nome");
+						double preço = rs2.getDouble("produto.preço");
 						
 						Produto produto = new Produto();
 						produto.setId(idped);
 						produto.setId(idp);
 						produto.setNome(pro);
-						System.out.println(idp + "  " + pro);
-
+						produto.setPreco(preço);
+						pedido.getProdutos().add(produto);
 				}
+				list.add(pedido);
 				st2.close();
 				rs2.close();
-
-//				for (Produto produto: pedido.getProdutos()) {
-//				//	Statement st2 = con.createStatement();
-//					ResultSet rs2 = st.executeQuery(sql);
-//					int idpr = rs2.getInt("idproduto");
-//					String nome = rs2.getString("nome");
-//					produto = new Produto();
-//					produto.setId(idpr);
-//					produto.setNome(nome);
-//					list.add(produto);
-//					System.out.println(idpr + "  "+ nome);
-//					rs2.close();
-//				}
 			}
 			st.close();
 			rs.close();
@@ -214,5 +206,13 @@ public class PedidoControllerDB {
 				con.close();
 			}
 		}
+	}
+
+	public List <Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List <Produto> produtos) {
+		this.produtos = produtos;
 	}
 }

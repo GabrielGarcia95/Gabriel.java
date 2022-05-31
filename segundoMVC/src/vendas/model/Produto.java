@@ -17,12 +17,13 @@ public class Produto {
 
 	@Override
 	public String toString() {
-		return "Produto ID: " + id + ", ITEM: " + nome + ", VALOR: R$" + preco;
+		return "Produto ID: " + id + ", ITEM: " + nome + ", VALOR: R$" + preco ;
 	}
 
 	public int getId() {
 		return id;
 	}
+	
 
 	public void setId(int id) {
 		this.id = id;

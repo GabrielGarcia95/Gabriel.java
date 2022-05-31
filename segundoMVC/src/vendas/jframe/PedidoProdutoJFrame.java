@@ -2,6 +2,8 @@ package vendas.jframe;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -18,14 +20,17 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import vendas.controller.db.ProdutoControllerDB;
 import vendas.model.Produto;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 public class PedidoProdutoJFrame extends JFrame {
 
 	private JPanel contentPane;
 	ProdutoControllerDB produtoC = new ProdutoControllerDB();
-	private JList<Produto> listProdutosDisponíveis;
 	private JList<Produto> listProdutosCarrinho;
 	private JButton btnAdcProduto;
+	private JList<Produto> listProdutosDisponíveis;
+	private JTextField testTOTAL;
 	
 	public void listarProdutos() throws Exception {
 		DefaultListModel<Produto> model = new DefaultListModel<>();
@@ -34,16 +39,21 @@ public class PedidoProdutoJFrame extends JFrame {
 		}
 		listProdutosDisponíveis.setModel(model);
 	}
+	DefaultListModel<Produto> produto = new DefaultListModel<>();
+	List<Produto> prod = new ArrayList<>();
 	public void carrinhoPedido () throws Exception {
-		DefaultListModel<Produto> produto = new DefaultListModel<>();
-//		for ( Produto pro : produtoC.listProduct()) {
-//			pro = listProdutosDisponíveis.getSelectedValue();
-//			produto.addElement(pro);
-//			listProdutosCarrinho.setModel(produto);
-//		}
+		
 		Produto p = listProdutosDisponíveis.getSelectedValue();
 		produto.addElement(p);
+		prod.add(p);
 		listProdutosCarrinho.setModel(produto);
+		
+		double total = 0;
+		for ( Produto produtos : prod) {
+			total += produtos.getPreco();
+		}
+		testTOTAL.setText(Double.toString(total));
+		
 	}
 
 	public PedidoProdutoJFrame() {
@@ -57,6 +67,10 @@ public class PedidoProdutoJFrame extends JFrame {
 				ColumnSpec.decode("max(41dlu;default)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(186dlu;default):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(0dlu;default)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -77,16 +91,19 @@ public class PedidoProdutoJFrame extends JFrame {
 		contentPane.add(lblNewLabel_1, "4, 2, center, default");
 		
 		JLabel lblNewLabel_2 = new JLabel("Carrinho");
-		contentPane.add(lblNewLabel_2, "8, 2, center, default");
+		contentPane.add(lblNewLabel_2, "12, 2, center, default");
 		
 		JLabel lblNewLabel = new JLabel("Produtos:");
 		contentPane.add(lblNewLabel, "2, 4, default, top");
 		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, "4, 4, fill, fill");
+		
 		listProdutosDisponíveis = new JList();
-		contentPane.add(listProdutosDisponíveis, "4, 4, fill, fill");
+		scrollPane.setViewportView(listProdutosDisponíveis);
 		
 		listProdutosCarrinho = new JList();
-		contentPane.add(listProdutosCarrinho, "8, 4, fill, fill");
+		contentPane.add(listProdutosCarrinho, "12, 4, fill, fill");
 		
 		btnAdcProduto = new JButton("Adicionar ao carrinho");
 		btnAdcProduto.addActionListener(new ActionListener() {
@@ -99,16 +116,20 @@ public class PedidoProdutoJFrame extends JFrame {
 				}
 			}
 		});
+		
+		JLabel lblNewLabel_3 = new JLabel("TOTAL:");
+		contentPane.add(lblNewLabel_3, "6, 6, 6, 1, right, default");
+		
+		testTOTAL = new JTextField();
+		contentPane.add(testTOTAL, "12, 6, fill, default");
+		testTOTAL.setColumns(10);
 		contentPane.add(btnAdcProduto, "4, 8");
 		
 		JButton btnConfirmar = new JButton("Confirmar");
-		contentPane.add(btnConfirmar, "8, 8");
-		
-		JButton btnDltProduto = new JButton("Remover");
-		contentPane.add(btnDltProduto, "4, 10, default, top");
+		contentPane.add(btnConfirmar, "12, 8");
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		contentPane.add(btnCancelar, "8, 10, default, top");
+		contentPane.add(btnCancelar, "12, 10, default, top");
 	}
 
 }

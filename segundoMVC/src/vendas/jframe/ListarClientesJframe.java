@@ -19,15 +19,20 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import vendas.controller.db.ClienteControllerDB;
 import vendas.model.Cliente;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ListarClientesJframe extends JFrame {
 
 	private JPanel contentPane;
 	ClienteControllerDB clienteC = new ClienteControllerDB();
 	private JButton btnExcluir;
-	private JList<Cliente> listClientes;
 	private JButton btnEditarCliente;
 	private JButton btnAtualizar;
+	private JScrollPane scrollPane;
+	private JList<Cliente> listClientes;
 	
 	public void listaDeClientes() throws Exception {
 		listClientes.removeAll();
@@ -87,8 +92,17 @@ public class ListarClientesJframe extends JFrame {
 			}
 		});
 		
+		scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, "4, 4, fill, fill");
+		
 		listClientes = new JList();
-		contentPane.add(listClientes, "4, 4, fill, fill");
+		listClientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+		//		e.
+			}
+		});
+		scrollPane.setViewportView(listClientes);
 		contentPane.add(btnAddCliente, "4, 6");
 		
 		btnExcluir = new JButton("Excluir cliente");

@@ -2,10 +2,12 @@ package vendas.jframe;
 
 import java.awt.EventQueue;
 import java.awt.Label;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -16,11 +18,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import java.awt.TextField;
 
 public class MenuJFrame extends JFrame {
 
@@ -47,7 +47,7 @@ public class MenuJFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuJFrame() {
-		setBounds(100, 100, 479, 300);
+		setBounds(100, 100, 588, 315);
 		
 		JMenuBar BarraDoMenu = new JMenuBar();
 		setJMenuBar(BarraDoMenu);
@@ -142,7 +142,7 @@ public class MenuJFrame extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[122.00px,grow][][68.00px,grow][116.00px,grow]", "[23px,grow][grow][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[122.00px,grow][][68.00px,grow][116.00px,grow]", "[23px,grow][grow][][][][]"));
 		
 		JButton AdicionarItensAoPedido = new JButton("Adicionar itens ao pedido");
 		AdicionarItensAoPedido.addActionListener(new ActionListener() {
@@ -159,9 +159,6 @@ public class MenuJFrame extends JFrame {
 		});
 		contentPane.add(AdicionarItensAoPedido, "cell 0 0");
 		
-		JLabel lblNewLabel = new JLabel("Itens adicionados:");
-		contentPane.add(lblNewLabel, "cell 2 0 1 2,alignx right");
-		
 		JButton SelecionarCliente = new JButton("Selecionar cliente");
 		SelecionarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -176,30 +173,42 @@ public class MenuJFrame extends JFrame {
 			}
 		});
 		
+		JLabel lblNewLabel = new JLabel("Itens adicionados:");
+		contentPane.add(lblNewLabel, "cell 1 0 1 2,alignx right");
+		
 		TextField ItensAdicionados = new TextField();
-		contentPane.add(ItensAdicionados, "cell 3 0 1 2,grow");
+		contentPane.add(ItensAdicionados, "cell 2 0 2 2,grow");
 		contentPane.add(SelecionarCliente, "cell 0 1");
 		
 		Label label = new Label("Cliente :");
-		contentPane.add(label, "cell 2 3,alignx right");
+		contentPane.add(label, "cell 1 2,alignx right");
 		
 		JFormattedTextField ExibirClienteSelecionado = new JFormattedTextField();
-		contentPane.add(ExibirClienteSelecionado, "cell 3 3,growx");
+		contentPane.add(ExibirClienteSelecionado, "cell 2 2 2 1,growx");
 		
-		JLabel lblNewLabel_2 = new JLabel("M\u00E9todo de pagamento");
-		contentPane.add(lblNewLabel_2, "cell 0 4,alignx right");
+		JLabel label_1 = new JLabel("");
+		label_1.setIcon(new ImageIcon("C:\\Users\\fjdev2\\Desktop\\beta.jpg"));
+		contentPane.add(label_1, "cell 0 3 1 2");
+		
+		JLabel lblNewLabel_2 = new JLabel("M\u00E9todo de pagamento:");
+		contentPane.add(lblNewLabel_2, "cell 1 4,alignx right");
 		
 		JRadioButton PagamentoDinheiro = new JRadioButton("Dinheiro");
+		PagamentoDinheiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		contentPane.add(PagamentoDinheiro, "cell 2 4");
 		
 		JRadioButton PagamentoCartao = new JRadioButton("Cart\u00E3o ou PIX");
+		PagamentoCartao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		contentPane.add(PagamentoCartao, "cell 3 4");
 		
 		JLabel lblNewLabel_1 = new JLabel("Valor total :");
 		contentPane.add(lblNewLabel_1, "cell 0 5,alignx trailing");
-		
-		JFormattedTextField ExibirValorTotalPedido = new JFormattedTextField();
-		contentPane.add(ExibirValorTotalPedido, "cell 2 5,growx");
 		
 		JButton ConfirmarPedido = new JButton("CONFIRMAR PEDIDO");
 		ConfirmarPedido.addActionListener(new ActionListener() {
@@ -207,7 +216,10 @@ public class MenuJFrame extends JFrame {
 				JOptionPane.showMessageDialog(ConfirmarPedido, "Pedido confirmado!");
 			}
 		});
-		contentPane.add(ConfirmarPedido, "cell 3 5");
+		
+		JFormattedTextField ExibirValorTotalPedido = new JFormattedTextField();
+		contentPane.add(ExibirValorTotalPedido, "cell 1 5,growx");
+		contentPane.add(ConfirmarPedido, "cell 2 5 2 1");
 	}
 
 }

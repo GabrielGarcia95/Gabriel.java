@@ -31,7 +31,6 @@ public class Pedido {
 		for (Produto produto : produtos) {
 			precoTotal += produto.getPreco();
 		}
-		//precoAvista += (float) (10 * 100/precoTotal);
 	}
 
 	public int getId() {

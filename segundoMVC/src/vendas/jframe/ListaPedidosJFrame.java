@@ -12,6 +12,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import vendas.controller.db.PedidoControllerDB;
 import vendas.model.Pedido;
+import vendas.model.Produto;
 
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
@@ -21,12 +22,15 @@ import java.awt.Font;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
+import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ListaPedidosJFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JList<Pedido> listPedidos;
 	PedidoControllerDB pedidoC = new PedidoControllerDB();
+	private JList<Pedido> listPedidos;
 	
 	public void listaPedidos () throws Exception {
 		listPedidos.removeAll();
@@ -61,8 +65,29 @@ public class ListaPedidosJFrame extends JFrame {
 		lblNewLabel.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 16));
 		contentPane.add(lblNewLabel, "4, 2, center, default");
 		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, "4, 4, fill, fill");
+		
 		listPedidos = new JList();
-		contentPane.add(listPedidos, "4, 4, fill, fill");
+		listPedidos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ProdutosPedidoJframe proped = new ProdutosPedidoJframe();
+				DefaultListModel<Produto> model = new DefaultListModel<Produto>();
+				listPedidos.getSelectedValue().getProdutos();
+				for (Produto produto : listPedidos.getSelectedValue().getProdutos()) {
+					model.addElement(produto);
+				}
+				try {
+					proped.setModel(model);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				proped.setVisible(true);
+			}
+		});
+		scrollPane.setViewportView(listPedidos);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
 		contentPane.add(verticalStrut, "6, 4");

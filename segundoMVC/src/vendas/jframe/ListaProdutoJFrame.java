@@ -21,6 +21,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import vendas.controller.db.ProdutoControllerDB;
 import vendas.model.Produto;
+import javax.swing.JScrollPane;
 
 public class ListaProdutoJFrame extends JFrame {
 
@@ -88,8 +89,11 @@ public class ListaProdutoJFrame extends JFrame {
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		contentPane.add(verticalStrut_1, "2, 4");
 		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, "4, 4, fill, fill");
+		
 		listprodut = new JList();
-		contentPane.add(listprodut, "4, 4, fill, fill");
+		scrollPane.setViewportView(listprodut);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
 		contentPane.add(verticalStrut, "6, 4");
