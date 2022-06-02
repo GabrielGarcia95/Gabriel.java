@@ -31,7 +31,10 @@ public class PedidoProdutoJFrame extends JFrame {
 	private JButton btnAdcProduto;
 	private JList<Produto> listProdutosDisponíveis;
 	private JTextField testTOTAL;
+	private MenuJFrame menuJ;
 	
+
+
 	public void listarProdutos() throws Exception {
 		DefaultListModel<Produto> model = new DefaultListModel<>();
 		for (Produto produto : produtoC.listProduct()) {
@@ -53,6 +56,7 @@ public class PedidoProdutoJFrame extends JFrame {
 			total += produtos.getPreco();
 		}
 		testTOTAL.setText(Double.toString(total));
+		menuJ.getExibirValorTotalPedido().setText(testTOTAL.getText());
 		
 	}
 
@@ -126,10 +130,30 @@ public class PedidoProdutoJFrame extends JFrame {
 		contentPane.add(btnAdcProduto, "4, 8");
 		
 		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuJ.getItensAdicionados().setModel(listProdutosCarrinho.getModel());
+				setVisible(false);
+			}
+		});
 		contentPane.add(btnConfirmar, "12, 8");
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		contentPane.add(btnCancelar, "12, 10, default, top");
 	}
+
+	public MenuJFrame getMenuJ() {
+		return menuJ;
+	}
+
+	public void setMenuJ(MenuJFrame menuJ) {
+		this.menuJ = menuJ;
+	}
+
 
 }

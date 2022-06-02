@@ -110,6 +110,7 @@ public class ListarClientesJframe extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					excluirCliente();
+					atualizar();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -29,23 +30,25 @@ public class ListaProdutoJFrame extends JFrame {
 	ProdutoControllerDB controleP = new ProdutoControllerDB();
 	private JButton btnExcluirProduto;
 	private JList<Produto> listprodut;
-	
-	public void listarProdutos () throws Exception {
+
+	public void listarProdutos() throws Exception {
 		DefaultListModel<Produto> modelP = new DefaultListModel<>();
 		listprodut.removeAll();
-		for(Produto produto : controleP.listProduct()) {
+		for (Produto produto : controleP.listProduct()) {
 			modelP.addElement(produto);
 		}
 		listprodut.setModel(modelP);
 	}
+
 	public void excluirProduto() throws Exception {
 		Produto produto = listprodut.getSelectedValue();
 		controleP.deleteProduct(produto);
-		
+
 	}
+
 	public void atualizar() throws Exception {
 		listprodut.removeAll();
-	    listarProdutos();
+		listarProdutos();
 	}
 
 	public ListaProdutoJFrame() {
@@ -54,25 +57,15 @@ public class ListaProdutoJFrame extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(170dlu;default):grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("max(241dlu;default):grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("max(15dlu;default)"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
-		
+		contentPane.setLayout(new FormLayout(
+				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+						FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(170dlu;default):grow"),
+						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, },
+				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("max(241dlu;default):grow"), FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("max(15dlu;default)"), FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
+
 		JButton btnAddProduto = new JButton("Adicionar novo produto");
 		btnAddProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -81,29 +74,37 @@ public class ListaProdutoJFrame extends JFrame {
 				addpro.setVisible(true);
 			}
 		});
-		
+
 		JLabel lblNewLabel = new JLabel("Lista de produtos");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(lblNewLabel, "4, 2, center, default");
-		
+
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		contentPane.add(verticalStrut_1, "2, 4");
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, "4, 4, fill, fill");
-		
+
 		listprodut = new JList();
 		scrollPane.setViewportView(listprodut);
-		
+
 		Component verticalStrut = Box.createVerticalStrut(20);
 		contentPane.add(verticalStrut, "6, 4");
 		contentPane.add(btnAddProduto, "4, 6");
-		
+
 		btnExcluirProduto = new JButton("Excluir");
 		btnExcluirProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					excluirProduto();
+					Object[] options = { "Sim", "Não" };
+
+					if (JOptionPane.showOptionDialog(ListaProdutoJFrame.this, "Excluir Produto?!", "titulo",
+							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+							"Não") == JOptionPane.YES_OPTION) {
+						excluirProduto();
+						atualizar();
+					}
+						
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -111,21 +112,6 @@ public class ListaProdutoJFrame extends JFrame {
 			}
 		});
 		contentPane.add(btnExcluirProduto, "4, 8");
-		
-		JButton btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					atualizar();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		contentPane.add(btnAtualizar, "4, 10");
 	}
-
-
 
 }

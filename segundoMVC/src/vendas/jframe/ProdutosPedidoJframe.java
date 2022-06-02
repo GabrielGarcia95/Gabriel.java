@@ -1,22 +1,19 @@
 package vendas.jframe;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
-import com.jgoodies.forms.layout.FormLayout;
+
 import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import vendas.controller.db.ProdutoControllerDB;
 import vendas.model.Produto;
-
-import com.jgoodies.forms.layout.FormSpecs;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
 
 public class ProdutosPedidoJframe extends JFrame {
 

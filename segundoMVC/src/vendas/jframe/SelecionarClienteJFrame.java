@@ -1,15 +1,17 @@
 package vendas.jframe;
 
-import java.awt.List;
-import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -19,10 +21,6 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import vendas.controller.db.ClienteControllerDB;
 import vendas.model.Cliente;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
 
 public class SelecionarClienteJFrame extends JFrame {
 
@@ -33,6 +31,8 @@ public class SelecionarClienteJFrame extends JFrame {
 	private JButton btnConfirmarBusca;
 	private JScrollPane scrollPane;
 	private JList<Cliente> listClientes;
+	private MenuJFrame menuJ;
+	private JButton btnCancelar;
 
 	public void listarCliente () throws Exception {
 		DefaultListModel<Cliente> model = new DefaultListModel<>();
@@ -70,6 +70,14 @@ public class SelecionarClienteJFrame extends JFrame {
 		JLabel lblNewLabel = new JLabel("Clientes:");
 		contentPane.add(lblNewLabel, "4, 2, center, default");
 		
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		contentPane.add(btnCancelar, "6, 2");
+		
 		scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, "4, 4, fill, fill");
 		
@@ -95,9 +103,19 @@ public class SelecionarClienteJFrame extends JFrame {
 		btnConfirmarBusca = new JButton("Confirmar ");
 		btnConfirmarBusca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Cliente cliente = listClientes.getSelectedValue();
+				menuJ.setCliente(cliente);
+				setVisible(false);
+				
 			}
 		});
 		contentPane.add(btnConfirmarBusca, "6, 6");
+	}
+	public MenuJFrame getMenuJ() {
+		return menuJ;
+	}
+	public void setMenuJ(MenuJFrame menuJ) {
+		this.menuJ = menuJ;
 	}
 
 }

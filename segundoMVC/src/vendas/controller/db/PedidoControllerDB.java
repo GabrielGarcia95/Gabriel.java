@@ -128,7 +128,13 @@ public class PedidoControllerDB {
 	public void excluirPedido(Pedido pedido) throws Exception {
 		Connection con = getConnection();
 		try {
-			String sql = "DELETE FROM pedido WHERE id = ?";
+			String sql = "DELETE FROM pedido_produto INNER JOIN pedido ON pedido.id = pedido_produto.idpedido WHERE id = ?";
+			PreparedStatement ps2 = con.prepareStatement(sql);
+
+			ps2.setInt(1, pedido.getId());
+			ps2.executeUpdate();
+			
+			sql = "DELETE FROM pedido WHERE id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 
 			ps.setInt(1, pedido.getId());
@@ -164,19 +170,20 @@ public class PedidoControllerDB {
 				Pedido pedido = new Pedido();
 				pedido.setId(id);
 				pedido.setDate(data);
-				pedido.setId(idc);
 				pedido.setPrecoTotal(tot);
 				
 				Cliente cliente = new Cliente();
 				cliente.setNome(nome);
+				cliente.setId(idc);
 				pedido.setCliente(cliente);
+				
 
 				
 				
-				String sql2 = "SELECT idpedido , idproduto, produto.nome, produto.preço FROM pedido_produto INNER JOIN produto ON produto.id = pedido_produto.idproduto";
+				sql = "SELECT idpedido , idproduto, produto.nome, produto.preço FROM pedido_produto INNER JOIN produto ON produto.id = pedido_produto.idproduto WHERE idpedido = "+id;
 
 				Statement st2 = con.createStatement();
-				ResultSet rs2 = st2.executeQuery(sql2);
+				ResultSet rs2 = st2.executeQuery(sql);
 				while (rs2.next()) {
 						int idped = rs2.getInt("idpedido");
 						int idp = rs2.getInt("idproduto");
